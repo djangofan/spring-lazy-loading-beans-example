@@ -3,13 +3,19 @@ package com.example;
 import com.example.config.ApplicationConfig;
 import com.example.entities.EmployeeDTO;
 import com.example.factory.EmployeeFactoryBean;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes={ApplicationConfig.class})
 public class TestSpringContext
 {
-	public static void main(String[] args) throws Exception
+	@Test
+	public void testLoadBeansLazily() throws Exception
 	{
-		// Get beans from context and print them out
 		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(ApplicationConfig.class);
 
 		EmployeeDTO manager = (EmployeeDTO)context.getBean("manager");
@@ -24,6 +30,6 @@ public class TestSpringContext
 		System.out.println(directorInstance.getFactoryType());
 		System.out.println(directorInstance.getObjectType());
 		System.out.println(directorInstance.getObject());
-
 	}
+
 }

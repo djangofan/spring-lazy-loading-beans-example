@@ -1,15 +1,18 @@
 package com.example.config;
 
+import com.example.entities.HelloWorldBean;
 import com.example.util.IntegerSequenceGenerator;
 import com.example.factory.EmployeeFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 
 @Configuration
 @PropertySource("classpath:application.properties")
+@Lazy
 public class ApplicationConfig
 {
 	public static String DEFAULT_FIRST_NAME_PROP_KEY = "defaults.firstName";
@@ -17,6 +20,13 @@ public class ApplicationConfig
 
 	@Autowired
 	public Environment springEnvironment;
+
+	@Bean(name="helloWorldBean")
+	public HelloWorldBean initHelloWorldBean()
+	{
+		HelloWorldBean helloWorldBean = new HelloWorldBean("Hello");
+		return helloWorldBean;
+	}
 
 	@Bean(name="integerSequenceGenerator")
 	public IntegerSequenceGenerator initSimpleIdGenerator()
