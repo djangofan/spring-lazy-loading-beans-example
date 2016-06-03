@@ -1,3 +1,3 @@
-# spring-bean-factory-example
+# spring-lazy-loading-beans-example
 
-Example of doing a Spring FactoryBean and loading properties in that lazy loaded bean from application.properties .
+Example of lazy loading beans and loading properties from application.properties .
