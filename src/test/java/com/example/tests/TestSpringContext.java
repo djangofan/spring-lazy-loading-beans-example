@@ -1,4 +1,4 @@
-package com.example;
+package com.example.tests;
 
 import com.example.config.ApplicationConfig;
 import com.example.entities.EmployeeDTO;
