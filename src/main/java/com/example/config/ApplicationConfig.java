@@ -3,36 +3,34 @@ package com.example.config;
 import com.example.entities.HelloWorldBean;
 import com.example.util.IntegerSequenceGenerator;
 import com.example.factory.EmployeeFactoryBean;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.Environment;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.*;
 
 @Configuration
 @PropertySource("classpath:application.properties")
 @Lazy
 public class ApplicationConfig
 {
-	public static String DEFAULT_FIRST_NAME_PROP_KEY = "defaults.firstName";
-	public static String DEFAULT_LAST_NAME_PROP_KEY = "defaults.lastName";
+	private static final String DEFAULT_FIRST_NAME_PROP_KEY = "defaults.firstName";
+	private static final String DEFAULT_LAST_NAME_PROP_KEY = "defaults.lastName";
 
-	@Autowired
-	public Environment springEnvironment;
+	@Value(DEFAULT_FIRST_NAME_PROP_KEY)
+	private String defaultFirstName;
+
+	@Value(DEFAULT_LAST_NAME_PROP_KEY)
+	private String defaultLastName;
 
 	@Bean(name="helloWorldBean")
+	@Scope("prototype")
 	public HelloWorldBean initHelloWorldBean()
 	{
-		HelloWorldBean helloWorldBean = new HelloWorldBean("Hello");
-		return helloWorldBean;
+		return new HelloWorldBean("Hello");
 	}
 
 	@Bean(name="integerSequenceGenerator")
 	public IntegerSequenceGenerator initSimpleIdGenerator()
 	{
-		IntegerSequenceGenerator integerSequenceGenerator = new IntegerSequenceGenerator();
-		return integerSequenceGenerator;
+		return new IntegerSequenceGenerator();
 	}
 
 	@Bean(name="manager")
@@ -53,12 +51,12 @@ public class ApplicationConfig
 
 	public String getDefaultFirstName()
 	{
-		return springEnvironment.getProperty(DEFAULT_FIRST_NAME_PROP_KEY);
+		return defaultFirstName;
 	}
 
 	public String getDefaultLastName()
 	{
-		return springEnvironment.getProperty(DEFAULT_LAST_NAME_PROP_KEY);
+		return defaultLastName;
 	}
 
 }

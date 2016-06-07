@@ -8,28 +8,31 @@ import org.junit.runner.RunWith;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import java.util.logging.Logger;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes={ApplicationConfig.class})
-public class TestSpringContext
+public class TestLazySpringContext
 {
+	static Logger logger = Logger.getLogger(TestLazySpringContext.class.getName());
+
 	@Test
 	public void testLoadBeansLazily() throws Exception
 	{
 		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(ApplicationConfig.class);
 
 		EmployeeDTO manager = (EmployeeDTO)context.getBean("manager");
-		System.out.println(manager);
+		logger.info("----- " + manager.toString() + " -----");
 
 		EmployeeDTO director = (EmployeeDTO)context.getBean("director");
-		System.out.println(director);
+		logger.info("----- " + director.toString() + " -----");
 
 		// Get an instance of a Director bean
 		EmployeeFactoryBean directorInstance = (EmployeeFactoryBean)context.getBean("&director");
 
-		System.out.println(directorInstance.getFactoryType());
-		System.out.println(directorInstance.getObjectType());
-		System.out.println(directorInstance.getObject());
+		logger.info("----- " + directorInstance.getFactoryType() + " -----");
+		logger.info("----- " + directorInstance.getObjectType().toString() + " -----");
+		logger.info("----- " + directorInstance.getObject().toString() + " -----");
 	}
 
 }
